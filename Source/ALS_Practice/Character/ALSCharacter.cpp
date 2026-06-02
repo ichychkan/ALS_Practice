@@ -1,32 +1,14 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿#include "ALSCharacter.h"
 
-
-#include "ALSCharacter.h"
-
-
-// Sets default values
-AALSCharacter::AALSCharacter()
+void AALSCharacter::ChangeEquippedWeapon(const uint8& WeaponTypeID)
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-}
-
-// Called when the game starts or when spawned
-void AALSCharacter::BeginPlay()
-{
-	Super::BeginPlay();
+	EWeaponType NewPossibleWeapon = static_cast<EWeaponType>(WeaponTypeID);
+	if (!StaticEnum<EWeaponType>()->IsValidEnumValue(WeaponTypeID) || EquippedWeapon == NewPossibleWeapon)
+	{
+		return;
+	}
 	
+	EquippedWeapon = NewPossibleWeapon;
+	
+	UE_LOG(LogTemp, Error, TEXT("%hhu"), WeaponTypeID);
 }
-
-// Called every frame
-void AALSCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void AALSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-

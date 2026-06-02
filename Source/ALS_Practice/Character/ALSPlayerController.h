@@ -22,6 +22,8 @@ protected:
 	void MoveHandle(const FInputActionValue& Value);
 	void JumpHandle();
 	
+	void ChangeWeaponHandle(const FInputActionValue& Value);
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;

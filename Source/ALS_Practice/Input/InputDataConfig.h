@@ -21,4 +21,7 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputAction> JumpAction;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UInputAction> ChangerWeaponAction;
 };

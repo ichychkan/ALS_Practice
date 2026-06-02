@@ -1,5 +1,6 @@
 ﻿#include "ALSPlayerController.h"
 
+#include "ALSCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "ALS_Practice/Input/InputDataConfig.h"
@@ -34,10 +35,10 @@ void AALSPlayerController::SetupInputComponent()
 		return;
 	}
 	
-	
 	EnhancedInputComponent->BindAction(InputActions->LookAction, ETriggerEvent::Triggered, this, &ThisClass::LookHandle);
 	EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this, &ThisClass::MoveHandle);
 	EnhancedInputComponent->BindAction(InputActions->JumpAction, ETriggerEvent::Started, this, &ThisClass::JumpHandle);
+	EnhancedInputComponent->BindAction(InputActions->ChangerWeaponAction, ETriggerEvent::Started, this, &ThisClass::ChangeWeaponHandle);
 }
 
 void AALSPlayerController::LookHandle(const FInputActionValue& Value)
@@ -77,4 +78,16 @@ void AALSPlayerController::JumpHandle()
 	}
 	
 	PlayerCharacter->Jump();
+}
+
+void AALSPlayerController::ChangeWeaponHandle(const FInputActionValue& Value)
+{
+	float WeaponType = Value.Get<float>();
+	AALSCharacter* PlayerCharacter = Cast<AALSCharacter>(GetPawn());
+	if (!IsValid(PlayerCharacter))
+	{
+		return;
+	}
+	
+	PlayerCharacter->ChangeEquippedWeapon(WeaponType);
 }
