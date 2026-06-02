@@ -38,7 +38,9 @@ void AALSPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(InputActions->LookAction, ETriggerEvent::Triggered, this, &ThisClass::LookHandle);
 	EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this, &ThisClass::MoveHandle);
 	EnhancedInputComponent->BindAction(InputActions->JumpAction, ETriggerEvent::Started, this, &ThisClass::JumpHandle);
-	EnhancedInputComponent->BindAction(InputActions->ChangerWeaponAction, ETriggerEvent::Started, this, &ThisClass::ChangeWeaponHandle);
+	EnhancedInputComponent->BindAction(InputActions->EquipMainWeaponAction, ETriggerEvent::Started, this, &ThisClass::ChangeWeaponHandle, EWeaponType::MainWeapon);
+	EnhancedInputComponent->BindAction(InputActions->EquipAdditionalWeaponAction, ETriggerEvent::Started, this, &ThisClass::ChangeWeaponHandle, EWeaponType::AdditionalWeapon);
+	EnhancedInputComponent->BindAction(InputActions->RemoveWeaponAction, ETriggerEvent::Started, this, &ThisClass::ChangeWeaponHandle, EWeaponType::Unarmed);
 }
 
 void AALSPlayerController::LookHandle(const FInputActionValue& Value)
@@ -80,7 +82,7 @@ void AALSPlayerController::JumpHandle()
 	PlayerCharacter->Jump();
 }
 
-void AALSPlayerController::ChangeWeaponHandle(const FInputActionValue& Value)
+void AALSPlayerController::ChangeWeaponHandle(const FInputActionValue& Value, EWeaponType InWeaponType)
 {
 	float WeaponType = Value.Get<float>();
 	AALSCharacter* PlayerCharacter = Cast<AALSCharacter>(GetPawn());
@@ -88,6 +90,6 @@ void AALSPlayerController::ChangeWeaponHandle(const FInputActionValue& Value)
 	{
 		return;
 	}
-	
-	PlayerCharacter->ChangeEquippedWeapon(WeaponType);
+
+	PlayerCharacter->ChangeEquippedWeapon(InWeaponType);
 }

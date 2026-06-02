@@ -1,14 +1,39 @@
 ﻿#include "ALSCharacter.h"
 
-void AALSCharacter::ChangeEquippedWeapon(const uint8& WeaponTypeID)
+#include "ALS_Practice/Animation/ALSBaseInterface.h"
+
+void AALSCharacter::BeginPlay()
 {
-	EWeaponType NewPossibleWeapon = static_cast<EWeaponType>(WeaponTypeID);
-	if (!StaticEnum<EWeaponType>()->IsValidEnumValue(WeaponTypeID) || EquippedWeapon == NewPossibleWeapon)
+	Super::BeginPlay();
+	
+	ChangeEquippedWeapon(EquippedWeapon);
+}
+
+void AALSCharacter::ChangeEquippedWeapon(EWeaponType WeaponType)
+{
+	if (EquippedWeapon == WeaponType)
 	{
 		return;
 	}
 	
-	EquippedWeapon = NewPossibleWeapon;
+	EquippedWeapon = WeaponType;
 	
-	UE_LOG(LogTemp, Error, TEXT("%hhu"), WeaponTypeID);
+	USkeletalMeshComponent* MeshComponent = GetMesh();
+	if (!IsValid(MeshComponent))
+	{
+		return;
+	}
+	
+	UAnimInstance* AnimInstance = MeshComponent->GetAnimInstance();
+	if (!IsValid(AnimInstance))
+	{
+		return;
+	}
+	
+	if (AnimInstance->GetClass()->ImplementsInterface(UALSBaseInterface::StaticClass()))
+	{
+		IALSBaseInterface::Execute_OnEquippedWeaponChanged(AnimInstance, EquippedWeapon);
+	}
+	
+	UE_LOG(LogTemp, Error, TEXT("%hhu"), EquippedWeapon);
 }

@@ -5,6 +5,7 @@
 #include "ALSPlayerController.generated.h"
 
 
+enum class EWeaponType : uint8;
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputDataConfig;
@@ -22,7 +23,7 @@ protected:
 	void MoveHandle(const FInputActionValue& Value);
 	void JumpHandle();
 	
-	void ChangeWeaponHandle(const FInputActionValue& Value);
+	void ChangeWeaponHandle(const FInputActionValue& Value, EWeaponType InWeaponType);
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")

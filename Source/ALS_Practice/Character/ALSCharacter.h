@@ -9,9 +9,9 @@
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-	UnArmed,
-	Pistol,
-	Rifle
+	Unarmed,
+	AdditionalWeapon,
+	MainWeapon
 };
 
 UCLASS()
@@ -20,7 +20,8 @@ class ALS_PRACTICE_API AALSCharacter : public ACharacter
 	GENERATED_BODY()
 	
 public:
-	void ChangeEquippedWeapon(const uint8& WeaponTypeID);
+	virtual void BeginPlay() override;
+	void ChangeEquippedWeapon(EWeaponType WeaponType);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly)

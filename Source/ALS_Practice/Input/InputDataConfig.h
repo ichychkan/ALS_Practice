@@ -23,5 +23,11 @@ public:
 	TObjectPtr<UInputAction> JumpAction;
 	
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UInputAction> ChangerWeaponAction;
+	TObjectPtr<UInputAction> EquipMainWeaponAction;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UInputAction> EquipAdditionalWeaponAction;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UInputAction> RemoveWeaponAction;
 };
